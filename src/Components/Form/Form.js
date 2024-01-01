@@ -11,6 +11,10 @@ import "./Form.css";
 const Form = () => {
   const [crypto, setCrypto] = useState([]);
   const [currency, setCurrency] = useState([]);
+  const [amount, setAmount] = useState(
+    "Please wait while we are calculating the amount"
+  );
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const form = useForm();
   const {
     register,
@@ -54,21 +58,27 @@ const Form = () => {
   }, []);
 
   const formSubmit = async (data) => {
-    console.log(data);
+    setFormSubmitted(true);
+    data["sign"] = currency.filter((curr) => {
+      if (curr.id === data.currency) {
+        return curr;
+      }
+    })[0].sign;
     try {
-      await fetch("http://localhost:3001/conversion", {
-        mode: "no-cors",
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      var requestOptions = {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: myHeaders,
         body: JSON.stringify(data),
-      }).then(async (response) => {
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-        }
-      });
+        redirect: "follow",
+      };
+      await fetch("http://localhost:3001/conversion", requestOptions)
+        .then(async (response) => response.text())
+        .then((result) => {
+          setAmount(result);
+        })
+        .catch((error) => console.log("error", error));
     } catch (e) {
       console.log(e);
     }
@@ -160,6 +170,7 @@ const Form = () => {
         <Button type="submit" variant="contained">
           Sumbit
         </Button>
+        <h3>{formSubmitted ? amount : ""}</h3>
       </div>
     </form>
   );
