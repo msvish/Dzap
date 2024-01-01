@@ -154,7 +154,7 @@ const Form = () => {
             id="currency"
             label="Target Currency "
             {...register("currency", submitValidation.currency)}
-            defaultValue={""}
+            defaultValue={"" || 2781}
           >
             {currency.length !== 0 &&
               currency.map((curr) => {
