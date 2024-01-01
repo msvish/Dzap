@@ -25,7 +25,7 @@ const Form = () => {
   useEffect(() => {
     const fetchCoins = async () => {
       try {
-        await fetch("http://localhost:3001/latestcoins").then(
+        await fetch("https://dzap-backend.onrender.com/latestcoins").then(
           async (response) => {
             if (response.ok) {
               const coins = await response.json();
@@ -40,7 +40,7 @@ const Form = () => {
     };
     const fetchCurrency = async () => {
       try {
-        await fetch("http://localhost:3001/currencies").then(
+        await fetch("https://dzap-backend.onrender.com/currencies").then(
           async (response) => {
             if (response.ok) {
               const currencies = await response.json();
@@ -73,7 +73,10 @@ const Form = () => {
         body: JSON.stringify(data),
         redirect: "follow",
       };
-      await fetch("http://localhost:3001/conversion", requestOptions)
+      await fetch(
+        "https://dzap-backend.onrender.com/conversion",
+        requestOptions
+      )
         .then(async (response) => response.text())
         .then((result) => {
           setAmount(result);
