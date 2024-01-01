@@ -1,6 +1,6 @@
 import React from "react";
 
-import CenteredForm from "./Components/Form/Form";
+import Form from "./Components/Form/Form";
 
 import "./App.css";
 
@@ -14,7 +14,7 @@ function App() {
         height: "80vh",
       }}
     >
-      <CenteredForm />
+      <Form />
     </div>
   );
 }

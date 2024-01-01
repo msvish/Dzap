@@ -8,7 +8,7 @@ import { Button, Input } from "@mui/material";
 
 import "./Form.css";
 
-const CenteredForm = () => {
+const Form = () => {
   const [crypto, setCrypto] = useState([]);
   const [currency, setCurrency] = useState([]);
   const form = useForm();
@@ -53,12 +53,16 @@ const CenteredForm = () => {
     fetchCurrency();
   }, []);
 
-  const formSubmit = async (eve) => {
-    console.log(eve);
+  const formSubmit = async (data) => {
+    console.log(data);
     try {
-      await fetch("http://localhost:3001/finalamount", {
+      await fetch("http://localhost:3001/conversion", {
+        mode: "no-cors",
         method: "POST",
-        body: JSON.stringify(eve),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       }).then(async (response) => {
         if (response.ok) {
           const data = await response.json();
@@ -161,4 +165,4 @@ const CenteredForm = () => {
   );
 };
 
-export default CenteredForm;
+export default Form;
